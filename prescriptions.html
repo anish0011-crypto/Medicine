@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescriptions - MediFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root { --primary: #4F46E5; --primary-light: #818CF8; --secondary: #10B981; --accent: #F59E0B; --background: #F8FAFC; --surface: #FFFFFF; --text-primary: #1E293B; --text-secondary: #64748B; --border: #E2E8F0; --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); --shadow-md: 0 8px 25px rgba(0,0,0,0.12); }
+        body { background: var(--background); color: var(--text-primary); }
+        
+        .header { background: var(--gradient-1); padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo { display: flex; align-items: center; gap: 10px; color: white; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .nav-menu { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; justify-content: center; }
+        .nav-menu a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; transition: all 0.3s; padding: 10px 18px; border-radius: 10px; font-size: 0.95rem; display: block; }
+        .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.25); color: white; }
+        .header-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline { background: transparent; border: 2px solid white; color: white; }
+        .btn-primary { background: white; color: var(--primary); }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .page-header { margin-bottom: 30px; }
+        .page-header h1 { font-size: 2rem; margin-bottom: 10px; }
+        .page-header p { color: var(--text-secondary); }
+
+        .upload-section { background: white; padding: 40px; border-radius: 20px; text-align: center; margin-bottom: 40px; box-shadow: var(--shadow-sm); border: 2px dashed var(--border); }
+        .upload-icon { width: 100px; height: 100px; background: var(--gradient-1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; color: white; }
+        .upload-section h2 { margin-bottom: 10px; }
+        .upload-section p { color: var(--text-secondary); margin-bottom: 20px; }
+        .upload-btn { padding: 14px 30px; background: var(--gradient-1); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .upload-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(79,70,229,0.4); }
+
+        .prescriptions-list h2 { margin-bottom: 20px; }
+        .prescription-card { background: white; padding: 25px; border-radius: 16px; margin-bottom: 15px; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .prescription-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .prescription-info p { color: var(--text-secondary); font-size: 0.9rem; }
+        .prescription-status { padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .status-pending { background: #FEF3C7; color: #92400E; }
+        .status-processing { background: #DBEAFE; color: #1E40AF; }
+        .status-completed { background: #D1FAE5; color: #065F46; }
+
+        .footer { background: var(--text-primary); color: white; padding: 40px 0 20px; margin-top: 60px; }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+        .footer-brand .logo { margin-bottom: 15px; }
+        .footer-brand p { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.7; }
+        .footer-column h4 { font-size: 1.1rem; margin-bottom: 15px; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 10px; }
+        .footer-column a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-bottom p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .developed-by { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .developed-by span { color: var(--primary-light); font-weight: 600; }
+
+        @media (max-width: 768px) { .header-container { flex-direction: column; gap: 15px; } .nav-menu { flex-wrap: wrap; justify-content: center; } .footer-grid { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo"><div class="logo-icon">💊</div><span>MediFlow</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="medicines.html">Medicines</a></li>
+                <li><a href="prescriptions.html" class="active">Prescriptions</a></li>
+                <li><a href="lab-tests.html">Lab Tests</a></li>
+                <li><a href="doctors.html">Consult Doctors</a></li>
+            </ul>
+            <div class="header-actions">
+                <a href="medicines.html" class="btn btn-outline"><i class="fas fa-search"></i> Search</a>
+                <a href="cart.html" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Cart</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1>📝 Upload Prescriptions</h1>
+            <p>Upload your doctor's prescription and we'll deliver the medicines to your doorstep.</p>
+        </div>
+
+        <div class="upload-section">
+            <div class="upload-icon">📤</div>
+            <h2>Drop your prescription here</h2>
+            <p>Supported formats: PDF, JPG, PNG (Max 10MB)</p>
+            <button class="upload-btn" onclick="uploadPrescription()"><i class="fas fa-upload"></i> Browse Files</button>
+        </div>
+
+        <div class="prescriptions-list">
+            <h2>Your Prescriptions</h2>
+            <div class="prescription-card">
+                <div class="prescription-info">
+                    <h3>Dr. Sharma - General Checkup</h3>
+                    <p>Uploaded: Jan 15, 2024 • 3 medicines</p>
+                </div>
+                <span class="prescription-status status-completed">Delivered</span>
+            </div>
+            <div class="prescription-card">
+                <div class="prescription-info">
+                    <h3>Dr. Patel - Cardiology</h3>
+                    <p>Uploaded: Jan 20, 2024 • 5 medicines</p>
+                </div>
+                <span class="prescription-status status-processing">Processing</span>
+            </div>
+            <div class="prescription-card">
+                <div class="prescription-info">
+                    <h3>Dr. Kumar - Dermatology</h3>
+                    <p>Uploaded: Jan 22, 2024 • 2 medicines</p>
+                </div>
+                <span class="prescription-status status-pending">Pending</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo"><div class="logo-icon">💊</div><span>MediFlow</span></a>
+                    <p>Your trusted online pharmacy for genuine medicines and healthcare products.</p>
+                </div>
+                <div class="footer-column"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+                <div class="footer-column"><h4>Services</h4><ul><li><a href="medicines.html">Medicines</a></li><li><a href="lab-tests.html">Lab Tests</a></li><li><a href="doctors.html">Doctors</a></li></ul></div>
+                <div class="footer-column"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li></ul></div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MediFlow. All rights reserved.</p>
+                <p class="developed-by">Developed by <span>Varsha</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function uploadPrescription() {
+            alert('Please select a file to upload (PDF, JPG, or PNG)');
+        }
+    </script>
+</body>
+</html>

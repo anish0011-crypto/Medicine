@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFlow - Online Pharmacy & Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        :root { --primary: #4F46E5; --primary-light: #818CF8; --secondary: #10B981; --accent: #F59E0B; --background: #F8FAFC; --surface: #FFFFFF; --text-primary: #1E293B; --text-secondary: #64748B; --border: #E2E8F0; --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --gradient-2: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); --gradient-3: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); --shadow-md: 0 8px 25px rgba(0,0,0,0.12); --shadow-lg: 0 15px 50px rgba(0,0,0,0.15); }
+        body { background: var(--background); color: var(--text-primary); }
+        
+        /* Header */
+        .header { background: var(--gradient-1); padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo { display: flex; align-items: center; gap: 10px; color: white; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .nav-menu { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; justify-content: center; }
+        .nav-menu a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; transition: all 0.3s; padding: 10px 18px; border-radius: 10px; font-size: 0.95rem; display: block; }
+        .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.25); color: white; }
+        .header-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline { background: transparent; border: 2px solid white; color: white; }
+        .btn-outline:hover { background: white; color: var(--primary); }
+        .btn-primary { background: white; color: var(--primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+
+        /* Hero */
+        .hero { background: var(--gradient-1); padding: 80px 0; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .hero-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-content h1 { font-size: 3rem; color: white; line-height: 1.2; margin-bottom: 20px; }
+        .hero-content p { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 30px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-hero { padding: 16px 32px; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s; border: none; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .btn-white { background: white; color: var(--primary); }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .btn-outline-white { background: transparent; border: 2px solid white; color: white; }
+        .btn-outline-white:hover { background: white; color: var(--primary); }
+        .hero-image { position: relative; text-align: center; }
+        .hero-img-main { width: 100%; max-width: 450px; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* Sections */
+        .features, .how-it-works, .categories, .products, .testimonials { padding: 80px 0; }
+        .features { background: white; }
+        .how-it-works, .products { background: var(--background); }
+        .categories, .testimonials { background: white; }
+        .section-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 2.5rem; color: var(--text-primary); margin-bottom: 15px; }
+        .section-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+        /* Features Grid */
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .feature-card { background: var(--background); padding: 30px; border-radius: 20px; text-align: center; transition: all 0.3s; border: 1px solid var(--border); }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+        .feature-icon { width: 80px; height: 80px; background: var(--gradient-1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: white; }
+        .feature-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Steps */
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .step-card { text-align: center; }
+        .step-number { width: 60px; height: 60px; background: var(--gradient-1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem; font-weight: 700; color: white; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4); }
+        .step-card h3 { font-size: 1.3rem; margin-bottom: 12px; }
+        .step-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Categories */
+        .category-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+        .category-card { background: var(--background); padding: 25px 15px; border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; text-decoration: none; color: var(--text-primary); }
+        .category-card:hover { border-color: var(--primary-light); transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .category-card.active { background: var(--gradient-1); color: white; }
+        .category-card .icon { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+        .category-card span { font-weight: 600; font-size: 0.9rem; }
+
+        /* Products */
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; transition: all 0.3s; border: 1px solid var(--border); }
+        .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .product-image { height: 180px; background: var(--gradient-3); display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; }
+        .product-badge { position: absolute; top: 15px; left: 15px; background: var(--accent); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .product-info { padding: 20px; }
+        .product-info h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .product-info .description { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; }
+        .product-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .product-price { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+        .product-rating { color: var(--accent); font-weight: 600; }
+        .btn-add { width: 100%; padding: 14px; background: var(--gradient-1); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-add:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(79,70,229,0.4); }
+
+        /* App Download */
+        .app-download { padding: 80px 0; background: var(--gradient-1); position: relative; overflow: hidden; }
+        .app-download::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .app-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .app-content h2 { font-size: 2.5rem; color: white; margin-bottom: 20px; }
+        .app-content p { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 30px; line-height: 1.7; }
+        .app-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .store-btn { background: white; color: var(--text-primary); padding: 14px 28px; border-radius: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.3s; border: none; }
+        .store-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .store-btn .text { text-align: left; }
+        .store-btn .text small { font-size: 0.75rem; display: block; }
+        .store-btn .text strong { font-size: 1.1rem; }
+
+        /* Testimonials */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .testimonial-card { background: var(--background); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+        .testimonial-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .testimonial-avatar { width: 60px; height: 60px; background: var(--gradient-1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; }
+        .testimonial-info h4 { font-size: 1.1rem; margin-bottom: 4px; }
+        .testimonial-info span { font-size: 0.85rem; color: var(--text-secondary); }
+        .testimonial-text { color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; }
+        .testimonial-rating { color: var(--accent); margin-top: 15px; }
+
+        /* Footer */
+        .footer { background: var(--text-primary); color: white; padding: 60px 0 20px; }
+        .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand .logo { margin-bottom: 20px; }
+        .footer-brand p { color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 20px; }
+        .social-links { display: flex; gap: 12px; }
+        .social-link { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s; }
+        .social-link:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-size: 1.1rem; margin-bottom: 20px; color: white; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a { color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s; font-size: 0.9rem; }
+        .footer-column a:hover { color: white; padding-left: 5px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-bottom p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .developed-by { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .developed-by span { color: var(--primary-light); font-weight: 600; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container, .app-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-buttons, .app-buttons { justify-content: center; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .category-grid { grid-template-columns: repeat(3, 1fr); }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; }
+            .nav-menu { justify-content: center; }
+            .hero-content h1 { font-size: 2rem; }
+            .features-grid, .steps-grid, .testimonial-grid { grid-template-columns: 1fr; }
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+            .product-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo"><div class="logo-icon">💊</div><span>MediFlow</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="medicines.html">Medicines</a></li>
+                <li><a href="prescriptions.html">Prescriptions</a></li>
+                <li><a href="lab-tests.html">Lab Tests</a></li>
+                <li><a href="doctors.html">Consult Doctors</a></li>
+            </ul>
+            <div class="header-actions">
+                <a href="medicines.html" class="btn btn-outline"><i class="fas fa-search"></i> Search</a>
+                <a href="cart.html" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Cart</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Your Health, Our Priority</h1>
+                <p>Get genuine medicines delivered to your doorstep within 2 hours. Upload your prescription and order in seconds.</p>
+                <div class="hero-buttons">
+                    <a href="medicines.html" class="btn-hero btn-white"><i class="fas fa-pills"></i> Order Medicines</a>
+                    <a href="prescriptions.html" class="btn-hero btn-outline-white"><i class="fas fa-file-medical"></i> Upload Prescription</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/450x450/4F46E5/FFFFFF?text=Medicine+Delivery" alt="Medicine Delivery" class="hero-img-main">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Why Choose MediFlow?</h2>
+                <p>We make healthcare accessible, affordable, and convenient for everyone.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Get your medicines delivered within 2 hours anywhere in your city.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>100% Genuine</h3>
+                    <p>All medicines are sourced from licensed pharmacies and are 100% authentic.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Best Prices</h3>
+                    <p>Up to 30% off on medicines and exclusive deals on healthcare products.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3>Expert Support</h3>
+                    <p>24/7 customer support from licensed pharmacists to assist you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Ordering medicines has never been easier.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Search or Upload</h3>
+                    <p>Search for medicines or simply upload your prescription.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Add to Cart</h3>
+                    <p>Add all required medicines to your cart and proceed to checkout.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Receive your medicines at your doorstep within hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <p>Browse through our wide range of healthcare categories.</p>
+            </div>
+            <div class="category-grid">
+                <a href="medicines.html" class="category-card active"><span class="icon">💊</span><span>All Medicines</span></a>
+                <a href="medicines.html" class="category-card"><span class="icon">🤒</span><span>Pain Relief</span></a>
+                <a href="medicines.html" class="category-card"><span class="icon">💉</span><span>Vitamins</span></a>
+                <a href="medicines.html" class="category-card"><span class="icon">🦠</span><span>Antibiotics</span></a>
+                <a href="medicines.html" class="category-card"><span class="icon">🩺</span><span>Diabetes</span></a>
+                <a href="medicines.html" class="category-card"><span class="icon">❤️</span><span>Heart Care</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Popular Medicines</h2>
+                <p>Best selling medicines at amazing prices.</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"><span class="product-badge">Best Seller</span>💊</div>
+                    <div class="product-info">
+                        <h3>Paracetamol 500mg</h3>
+                        <p class="description">Pack of 10 tablets - Pain & Fever</p>
+                        <div class="product-meta"><span class="product-price">₹25</span><span class="product-rating">⭐ 4.8</span></div>
+                        <button class="btn-add" onclick="addToCart('Paracetamol 500mg', 25)"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-badge">15% Off</span>💉</div>
+                    <div class="product-info">
+                        <h3>Vitamin C Complex</h3>
+                        <p class="description">30 tablets - Immunity Boost</p>
+                        <div class="product-meta"><span class="product-price">₹199</span><span class="product-rating">⭐ 4.9</span></div>
+                        <button class="btn-add" onclick="addToCart('Vitamin C Complex', 199)"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-badge">Prescription</span>🌿</div>
+                    <div class="product-info">
+                        <h3>Azithromycin 250mg</h3>
+                        <p class="description">6 tablets - Antibiotic</p>
+                        <div class="product-meta"><span class="product-price">₹120</span><span class="product-rating">⭐ 4.7</span></div>
+                        <button class="btn-add" onclick="addToCart('Azithromycin 250mg', 120)"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-badge">Popular</span>🤒</div>
+                    <div class="product-info">
+                        <h3>Ibuprofen 400mg</h3>
+                        <p class="description">20 tablets - Pain Relief</p>
+                        <div class="product-meta"><span class="product-price">₹45</span><span class="product-rating">⭐ 4.6</span></div>
+                        <button class="btn-add" onclick="addToCart('Ibuprofen 400mg', 45)"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download -->
+    <section class="app-download">
+        <div class="app-container">
+            <div class="app-content">
+                <h2>Download Our App</h2>
+                <p>Get the MediFlow app and enjoy exclusive deals, faster ordering, and real-time order tracking.</p>
+                <div class="app-buttons">
+                    <button class="store-btn"><i class="fab fa-apple" style="font-size: 1.8rem;"></i><div class="text"><small>Download on the</small><strong>App Store</strong></div></button>
+                    <button class="store-btn"><i class="fab fa-google-play" style="font-size: 1.8rem;"></i><div class="text"><small>Get it on</small><strong>Google Play</strong></div></button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/350x600/4F46E5/FFFFFF?text=App+Screenshot" alt="App Screenshot" class="hero-img-main">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Join thousands of happy customers who trust MediFlow.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header"><div class="testimonial-avatar">👨</div><div class="testimonial-info"><h4>Rajesh Kumar</h4><span>Delhi</span></div></div>
+                    <p class="testimonial-text">"MediFlow has made it so easy to order medicines. The delivery is super fast and the medicines are always authentic. Highly recommended!"</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header"><div class="testimonial-avatar">👩</div><div class="testimonial-info"><h4>Priya Sharma</h4><span>Mumbai</span></div></div>
+                    <p class="testimonial-text">"Great service! I uploaded my father's prescription and got the medicines delivered within 2 hours. Very satisfied with the quality."</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header"><div class="testimonial-avatar">👨‍💼</div><div class="testimonial-info"><h4>Mohammad Ahmed</h4><span>Bangalore</span></div></div>
+                    <p class="testimonial-text">"Best online pharmacy! Competitive prices and excellent customer support. I order all my monthly medicines from here."</p>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo"><div class="logo-icon">💊</div><span>MediFlow</span></a>
+                    <p>MediFlow is India's leading online pharmacy, providing genuine medicines and healthcare products at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="medicines.html">Order Medicines</a></li>
+                        <li><a href="lab-tests.html">Lab Tests</a></li>
+                        <li><a href="doctors.html">Consult Doctors</a></li>
+                        <li><a href="#">Health Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MediFlow. All rights reserved.</p>
+                <p class="developed-by">Developed by <span>Varsha</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function addToCart(name, price) {
+            alert(name + ' - ₹' + price + ' added to cart!');
+            window.location.href = 'cart.html';
+        }
+    </script>
+</body>
+</html>
